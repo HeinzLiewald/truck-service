@@ -14,8 +14,8 @@ public class DriverQueriesTests
 {
     private readonly IFixture _fixture;
 
-    private readonly Mock<IContainerFactory> _containerFactor;
-    private readonly Mock<IDataReader> _dataReade;
+    private readonly Mock<IContainerFactory> _containerFactoryMock;
+    private readonly Mock<IDataReader> _dataReaderMock;
     private readonly Mock<Container> _container;
 
     private readonly DriverQueries _sut;
@@ -24,8 +24,8 @@ public class DriverQueriesTests
     {
         _fixture = new Fixture().Customize(new AutoMoqCustomization());
 
-        _containerFactor = _fixture.Freeze<Mock<IContainerFactory>>();
-        _dataReade = _fixture.Freeze<Mock<IDataReader>>();
+        _containerFactoryMock = _fixture.Freeze<Mock<IContainerFactory>>();
+        _dataReaderMock = _fixture.Freeze<Mock<IDataReader>>();
         _container = _fixture.Freeze<Mock<Container>>();
 
         _sut = _fixture.Create<DriverQueries>();
@@ -38,7 +38,7 @@ public class DriverQueriesTests
         var cancellationToken = CancellationToken.None;
         var drivers = _fixture.CreateMany<Driver>(count: 3).ToList();
 
-        _containerFactor
+        _containerFactoryMock
             .Setup(cf => cf.CreateDriversContainerInstance())
             .ReturnsUsingFixture(_fixture);
 
@@ -46,7 +46,7 @@ public class DriverQueriesTests
           .Setup(c => c.GetItemLinqQueryable<Driver>(It.IsAny<bool>(), It.IsAny<string>(), It.IsAny<QueryRequestOptions>(), It.IsAny<CosmosLinqSerializerOptions>()))
           .Returns(drivers.AsQueryable().OrderBy(d => d.Id));
 
-        _dataReade
+        _dataReaderMock
             .Setup(dr => dr.ReadAsync(It.IsAny<IQueryable<Driver>>(), It.IsAny<List<Driver>>(), cancellationToken))
             .Callback<IQueryable<Driver>, List<Driver>, CancellationToken>((_, list, _) =>
             {

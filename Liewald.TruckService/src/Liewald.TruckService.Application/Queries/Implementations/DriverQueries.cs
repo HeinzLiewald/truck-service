@@ -6,7 +6,7 @@ using Microsoft.Azure.Cosmos;
 
 namespace Liewald.TruckService.Application.Queries.Implementations;
 
-internal sealed class DriverQueries : IDriverQueries
+public sealed class DriverQueries : IDriverQueries
 {
     private readonly IContainerFactory _containerFactory;
     private readonly IDataReader _dataReader;

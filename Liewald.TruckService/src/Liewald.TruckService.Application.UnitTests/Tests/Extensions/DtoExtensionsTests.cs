@@ -1,24 +1,16 @@
-﻿using AutoFixture;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Liewald.TruckService.Application.Extensions;
+using Liewald.TruckService.Application.UnitTests.Framework;
 using Liewald.TruckService.Domain.Models;
 
 namespace Liewald.TruckService.Application.UnitTests.Tests.Extensions;
 
 public class DtoExtensionsTests
 {
-    private readonly IFixture _fixture;
-
-    public DtoExtensionsTests()
+    [Theory]
+    [AutoMoqData]
+    public void ToDto_WithValidDriver_ReturnsDto(Driver driver)
     {
-        _fixture = new Fixture();
-    }
-
-    [Fact]
-    public void ToDto_WithValidDriver_ReturnsDto()
-    {
-        var driver = _fixture.Create<Driver>();
-
         var driverDto = driver.ToDto();
 
         driverDto.Should().NotBeNull();

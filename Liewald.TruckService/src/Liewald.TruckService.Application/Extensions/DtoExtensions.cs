@@ -16,8 +16,7 @@ public static class DtoExtensions
         });
 
         _mapper = config.CreateMapper();
-
     }
 
-    public static DriverDto ToDto(this Driver truck) => _mapper.Map<DriverDto>(truck);
+    public static DriverDto ToDto(this Driver driver) => _mapper.Map<DriverDto>(driver);
 }

@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Liewald.TruckService.Application.Dtos;
 using Liewald.TruckService.Application.Extensions;
 using Liewald.TruckService.Application.UnitTests.Framework;
 using Liewald.TruckService.Domain.Models;
@@ -14,6 +15,7 @@ public class DtoExtensionsTests
         var driverDto = driver.ToDto();
 
         driverDto.Should().NotBeNull();
+        driverDto.Should().BeOfType<DriverDto>();
 
         driverDto.FirstName.Should().Be(driver.FirstName);
         driverDto.LastName.Should().Be(driver.LastName);

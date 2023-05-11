@@ -29,7 +29,7 @@ public sealed class DriverQueries : IDriverQueries
 
         IQueryable<Driver> query = container
             .GetItemLinqQueryable<Driver>()
-            .Where(e => e.Location.City == location);
+            .Where(e => e.Location.City.Equals(location, StringComparison.InvariantCultureIgnoreCase));
 
         List<Driver> drivers = new();
 
